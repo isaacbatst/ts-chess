@@ -9,7 +9,7 @@ export enum Row {
 	EIGHT = 'EIGHT',
 }
 
-export enum Column {
+export enum Col {
 	A = 'A',
 	B = 'B',
 	C = 'C',
@@ -23,6 +23,6 @@ export enum Column {
 export class Position {
 	constructor(
 		readonly row: Row,
-		readonly col: Column,
+		readonly col: Col,
 	) {}
 }
