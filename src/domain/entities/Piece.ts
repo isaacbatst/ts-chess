@@ -1,6 +1,6 @@
 
 export abstract class Piece {
 	constructor(
-		readonly name: string,
+		readonly id: string,
 	) {}
 }

@@ -1,11 +1,15 @@
 import type {PieceOnBoard} from './PieceOnboard';
 import type {Position} from './Position';
 
+export type MovingBoard = {
+	movePiece(pieceId: string, to: {row: string; col: string}): void;
+};
+
 export class Board {
 	readonly pieces: PieceOnBoard[] = [];
 
-	addPiece(pieceOnBoard: PieceOnBoard) {
-		if (this.isPositionOccupied(pieceOnBoard.position)) {
+	public addPiece(pieceOnBoard: PieceOnBoard) {
+		if (this.isPositionOccupied(pieceOnBoard.getPosition())) {
 			throw new Error('POSITION_OCCUPIED');
 		}
 
@@ -13,8 +17,32 @@ export class Board {
 	}
 
 	public isPositionOccupied(position: Position) {
-		return this.pieces.some(piece => (
-			piece.position.col === position.col && piece.position.row === position.row
-		));
+		return this.pieces.some(piece => {
+			const piecePosition = piece.getPosition();
+
+			return piecePosition.col === position.col && piecePosition.row === position.row;
+		});
+	}
+
+	public movePiece(pieceId: string, to: {row: string; col: string}): void {
+		const piece = this.pieces.find(piece => piece.id === pieceId);
+
+		if (!piece) {
+			throw new Error('PIECE_NOT_FOUND');
+		}
+
+		piece.move(this, to);
+	}
+
+	public getPieceAvailableMoves(pieceId: string): Position[] {
+		const piece = this.pieces.find(piece => piece.id === pieceId);
+
+		if (!piece) {
+			throw new Error('PIECE_NOT_FOUND');
+		}
+
+		const moves = piece.getAvailableMoves(this);
+
+		return moves;
 	}
 }

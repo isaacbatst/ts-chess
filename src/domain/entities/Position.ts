@@ -21,8 +21,30 @@ export enum Col {
 }
 
 export class Position {
+	readonly row: Row;
+	readonly col: Col;
+
 	constructor(
-		readonly row: Row,
-		readonly col: Col,
-	) {}
+		row: string,
+		col: string,
+	) {
+		if (!this.isRowValid(row)) {
+			throw new Error('INVALID_ROW');
+		}
+
+		if (!this.isColValid(col)) {
+			throw new Error('INVALID_COL');
+		}
+
+		this.row = row;
+		this.col = col;
+	}
+
+	private isRowValid(row: string): row is Row {
+		return row in Row;
+	}
+
+	private isColValid(col: string): col is Col {
+		return col in Col;
+	}
 }
