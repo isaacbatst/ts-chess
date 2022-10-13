@@ -14,36 +14,54 @@ export class Pawn extends Piece implements PieceOnBoard {
 	}
 
 	getAvailableMoves(board: Board): Position[] {
-		if (this.isOnLastRow()) {
-			return [];
-		}
-
-		const availableMoves: Position[] = [];
 		const rows = Object.keys(Row) as Row[];
-		const rowIndex = rows.findIndex(row => row === this.position.row);
+		const actualRowIndex = rows.findIndex(row => row === this.position.row);
 
-		if (rowIndex < 0) {
+		if (actualRowIndex < 0) {
 			throw new Error('ROW_NOT_FOUND');
 		}
 
 		if (this.color === PieceColor.WHITE) {
-			for (let index = rowIndex; index <= rows.length - 1; index += 1) {
-				const newPosition = new Position(Row[rows[index]], this.position.col);
-				if (board.isPositionOccupied(newPosition)) {
-					break;
-				}
+			return this.getWhiteMoves(actualRowIndex, board);
+		}
 
-				availableMoves.push();
+		return this.getBlackMoves(actualRowIndex, board);
+	}
+
+	private getWhiteMoves(actualRowIndex: number, board: Board): Position[] {
+		const rows = Object.keys(Row) as Row[];
+		const availableMoves: Position[] = [];
+		const lastRowIndex = rows.length - 1;
+
+		for (let index = actualRowIndex; index <= lastRowIndex; index += 1) {
+			const nextRow = rows[index + 1];
+			const newPosition = new Position(Row[nextRow], this.position.col);
+			if (board.isPositionOccupied(newPosition)) {
+				break;
 			}
+
+			availableMoves.push(newPosition);
 		}
 
 		return availableMoves;
 	}
 
-	private isOnLastRow() {
-		return (
-			(this.color === PieceColor.WHITE && this.position.row === Row.EIGHT)
-      || (this.color === PieceColor.BLACK && this.position.row === Row.ONE)
-		);
+	private getBlackMoves(actualRowIndex: number, board: Board): Position[] {
+		const rows = Object.keys(Row) as Row[];
+		const availableMoves: Position[] = [];
+		const lastRowIndex = 0;
+
+		for (let index = actualRowIndex; index > lastRowIndex; index -= 1) {
+			const nextRow = rows[index - 1];
+			const newPosition = new Position(Row[nextRow], this.position.col);
+
+			if (board.isPositionOccupied(newPosition)) {
+				break;
+			}
+
+			availableMoves.push(newPosition);
+		}
+
+		return availableMoves;
 	}
 }
