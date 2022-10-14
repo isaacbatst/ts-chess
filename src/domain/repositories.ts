@@ -1,8 +1,8 @@
 import type {Board} from './entities/Board';
 import type {Game} from './entities/Game';
 
-export type MovePieceBoardRepository = {
-	move(newBoard: Board, gameId: string): Promise<void>;
+export type UpdateBoardGameRepository = {
+	updateBoard(newBoard: Board, gameId: string): Promise<void>;
 };
 
 export type GetGameByIdRepository = {
@@ -11,4 +11,8 @@ export type GetGameByIdRepository = {
 
 export type CreateGameRepository = {
 	create(game: Game): Promise<void>;
+};
+
+export type GetGameByPlayerIdRepository = {
+	getByPlayerId(playerId: string): Promise<Game | undefined>;
 };

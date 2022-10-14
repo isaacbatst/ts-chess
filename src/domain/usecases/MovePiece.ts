@@ -1,4 +1,4 @@
-import type {GetGameByIdRepository, MovePieceBoardRepository} from '../repositories';
+import type {GetGameByIdRepository, UpdateBoardGameRepository} from '../repositories';
 
 type Input = {
 	to: {
@@ -11,8 +11,7 @@ type Input = {
 
 export class MovePiece {
 	constructor(
-		private readonly gamesRepository: GetGameByIdRepository,
-		private readonly pieceRepository: MovePieceBoardRepository,
+		private readonly gamesRepository: GetGameByIdRepository & UpdateBoardGameRepository,
 	) {}
 
 	async execute(input: Input) {
@@ -24,6 +23,6 @@ export class MovePiece {
 
 		game.board.movePiece(input.pieceId, input.to);
 
-		await this.pieceRepository.move(game.board, input.gameId);
+		await this.gamesRepository.updateBoard(game.board, input.gameId);
 	}
 }

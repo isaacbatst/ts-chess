@@ -5,6 +5,6 @@ export class Game {
 		readonly id: string,
 		readonly whitePlayerId: string,
 		readonly blackPlayerId: string,
-		readonly board: Board,
+		public board: Board,
 	) {}
 }
