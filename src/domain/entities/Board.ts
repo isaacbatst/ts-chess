@@ -1,11 +1,14 @@
-import type {PieceOnBoard} from './PieceOnboard';
+import type {PieceColor, PieceOnBoard} from './PieceOnboard';
 import type {Position} from './Position';
+import {Col, Row} from './Position';
 
 export type MovingBoard = {
 	movePiece(pieceId: string, to: {row: string; col: string}): void;
 };
 
 export class Board {
+	static readonly rows = Object.keys(Row) as Row[];
+	static readonly cols = Object.keys(Col) as Col[];
 	readonly pieces: PieceOnBoard[] = [];
 
 	public addPiece(pieceOnBoard: PieceOnBoard) {
@@ -21,6 +24,16 @@ export class Board {
 			const piecePosition = piece.getPosition();
 
 			return piecePosition.col === position.col && piecePosition.row === position.row;
+		});
+	}
+
+	public isPositionOccupiedWithEnemy(position: Position, color: PieceColor) {
+		return this.pieces.some(piece => {
+			const piecePosition = piece.getPosition();
+
+			return piecePosition.col === position.col
+			&& piecePosition.row === position.row
+			&& piece.color !== color;
 		});
 	}
 
