@@ -23,17 +23,15 @@ export class Board {
 		return this.pieces.some(piece => {
 			const piecePosition = piece.getPosition();
 
-			return piecePosition.col === position.col && piecePosition.row === position.row;
+			return piecePosition.isEqualTo(position);
 		});
 	}
 
-	public isPositionOccupiedWithEnemy(position: Position, color: PieceColor) {
+	public isPositionOccupiedByEnemy(position: Position, color: PieceColor) {
 		return this.pieces.some(piece => {
 			const piecePosition = piece.getPosition();
 
-			return piecePosition.col === position.col
-			&& piecePosition.row === position.row
-			&& piece.color !== color;
+			return piecePosition.isEqualTo(position) && piece.color !== color;
 		});
 	}
 
@@ -57,5 +55,15 @@ export class Board {
 		const moves = piece.getAvailableMoves(this);
 
 		return moves;
+	}
+
+	public getPieceByPosition(position: Position) {
+		const piece = this.pieces.find(piece => {
+			const piecePosition = piece.getPosition();
+
+			return piecePosition.isEqualTo(position);
+		});
+
+		return piece;
 	}
 }

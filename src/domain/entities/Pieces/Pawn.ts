@@ -7,7 +7,7 @@ import {WhitesPawnMovesCalculator} from './PawnWhiteMoveCalculator';
 export class Pawn extends PieceOnBoard {
 	private hasAlreadyMoved: boolean;
 
-	constructor(id: string, position: Position, color: PieceColor, hasAlreadyMoved: boolean) {
+	constructor(id: string, position: Position, color: PieceColor, hasAlreadyMoved = false) {
 		super(id, position, color);
 		this.hasAlreadyMoved = hasAlreadyMoved;
 	}

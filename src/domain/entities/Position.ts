@@ -40,6 +40,10 @@ export class Position {
 		this.col = col;
 	}
 
+	public isEqualTo(position: Position) {
+		return position.col === this.col && position.row === this.row;
+	}
+
 	private isRowValid(row: string): row is Row {
 		return row in Row;
 	}

@@ -1,6 +1,6 @@
 import type {Board} from '../Board';
 import type {Position} from '../Position';
-import {Col, Row} from '../Position';
+import {Col} from '../Position';
 import type {Pawn} from './Pawn';
 
 export abstract class PawnMovesCalculator {
@@ -19,14 +19,14 @@ export abstract class PawnMovesCalculator {
 
 	protected checkAndPushLeftDiagonal(moves: Position[]) {
 		const leftDiagonal = this.getLeftDiagonal();
-		if (this.board.isPositionOccupiedWithEnemy(leftDiagonal, this.pawn.color)) {
+		if (this.board.isPositionOccupiedByEnemy(leftDiagonal, this.pawn.color)) {
 			moves.push(leftDiagonal);
 		}
 	}
 
 	protected checkAndPushRightDiagonal(moves: Position[]) {
 		const rightDiagonal = this.getRightDiagonal();
-		if (this.board.isPositionOccupiedWithEnemy(rightDiagonal, this.pawn.color)) {
+		if (this.board.isPositionOccupiedByEnemy(rightDiagonal, this.pawn.color)) {
 			moves.push(rightDiagonal);
 		}
 	}
