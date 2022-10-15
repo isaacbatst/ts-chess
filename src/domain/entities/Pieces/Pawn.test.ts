@@ -65,4 +65,66 @@ describe('Pawn', () => {
 			});
 		});
 	});
+
+	describe('Blacks', () => {
+		describe('Given pawn has not moved yet', () => {
+			it('should return initial avaliable moves', () => {
+				const board = new Board();
+				const pawn = new Pawn('any-id', new Position(Row.SEVEN, Col.A), PieceColor.BLACK);
+				board.addPiece(pawn);
+				const avaliableMoves = pawn.getAvailableMoves(board);
+				expect(avaliableMoves).toHaveLength(2);
+				expect(avaliableMoves).toContainEqual(new Position(Row.SIX, Col.A));
+				expect(avaliableMoves).toContainEqual(new Position(Row.FIVE, Col.A));
+			});
+		});
+
+		describe('Given pawn has already moved', () => {
+			it('should allow only one move', () => {
+				const board = new Board();
+				const pawn = new Pawn('any-id', new Position(Row.SEVEN, Col.A), PieceColor.BLACK);
+				board.addPiece(pawn);
+				pawn.move(board, {row: Row.SIX, col: Col.A});
+				const avaliableMoves = pawn.getAvailableMoves(board);
+				expect(avaliableMoves).toHaveLength(1);
+				expect(avaliableMoves).toContainEqual(new Position(Row.FIVE, Col.A));
+			});
+		});
+
+		describe('Given enemy right diagonal', () => {
+			it('should allow move foward and capturing', () => {
+				const board = new Board();
+				const pawn2a = new Pawn('any-id-1', new Position(Row.SEVEN, Col.A), PieceColor.BLACK);
+				const pawn7b = new Pawn('any-id-2', new Position(Row.SIX, Col.B), PieceColor.WHITE);
+				board.addPiece(pawn2a);
+				board.addPiece(pawn7b);
+				const avaliableMoves = pawn2a.getAvailableMoves(board);
+				expect(avaliableMoves).toHaveLength(3);
+
+				expect(avaliableMoves).toContainEqual(new Position(Row.SIX, Col.A));
+				expect(avaliableMoves).toContainEqual(new Position(Row.FIVE, Col.A));
+				expect(avaliableMoves).toContainEqual(new Position(Row.SIX, Col.B));
+			});
+		});
+
+		describe('Given enemies at both diagonals', () => {
+			it('should allow move foward and capturing', () => {
+				const board = new Board();
+				const pawn2b = new Pawn('any-id-1', new Position(Row.FIVE, Col.B), PieceColor.BLACK, true);
+				const pawn7a = new Pawn('any-id-2', new Position(Row.FOUR, Col.A), PieceColor.WHITE);
+				const pawn7c = new Pawn('any-id-3', new Position(Row.FOUR, Col.C), PieceColor.WHITE);
+
+				board.addPiece(pawn2b);
+				board.addPiece(pawn7a);
+				board.addPiece(pawn7c);
+
+				const avaliableMoves = pawn2b.getAvailableMoves(board);
+
+				expect(avaliableMoves).toHaveLength(3);
+				expect(avaliableMoves).toContainEqual(new Position(Row.FOUR, Col.B));
+				expect(avaliableMoves).toContainEqual(new Position(Row.FOUR, Col.C));
+				expect(avaliableMoves).toContainEqual(new Position(Row.FOUR, Col.A));
+			});
+		});
+	});
 });
