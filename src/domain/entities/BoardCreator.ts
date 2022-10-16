@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import {Board} from './Board';
 import {PieceColor} from './Piece';
-import {Pawn} from './Pieces/Pawn';
+import {Pawn} from './Pieces/Pawn/Pawn';
 import {Col, Position, Row} from './Position';
 
 export class BoardCreator {

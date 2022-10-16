@@ -1,6 +1,6 @@
-import type {Board} from '../Board';
-import type {Position} from '../Position';
-import {Col} from '../Position';
+import type {Board} from '../../Board';
+import type {Position} from '../../Position';
+import {Col} from '../../Position';
 import type {Pawn} from './Pawn';
 
 export abstract class PawnMovesCalculator {

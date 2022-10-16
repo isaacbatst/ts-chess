@@ -1,7 +1,7 @@
-import type {Board} from '../Board';
-import {PieceColor} from '../Piece';
-import {PieceOnBoard} from '../PieceOnboard';
-import type {Position} from '../Position';
+import type {Board} from '../../Board';
+import {PieceColor} from '../../Piece';
+import {PieceOnBoard} from '../../PieceOnboard';
+import type {Position} from '../../Position';
 import PawnBlackMoveCalculator from './PawnBlackMoveCalculator';
 import {WhitesPawnMovesCalculator} from './PawnWhiteMoveCalculator';
 

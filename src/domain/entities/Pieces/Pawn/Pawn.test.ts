@@ -1,6 +1,6 @@
-import {Board} from '../Board';
-import {PieceColor} from '../Piece';
-import {Col, Position, Row} from '../Position';
+import {Board} from '../../Board';
+import {PieceColor} from '../../Piece';
+import {Col, Position, Row} from '../../Position';
 import {Pawn} from './Pawn';
 
 describe('Pawn', () => {
