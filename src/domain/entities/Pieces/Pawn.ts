@@ -1,5 +1,6 @@
 import type {Board} from '../Board';
-import {PieceColor, PieceOnBoard} from '../PieceOnboard';
+import {PieceColor} from '../Piece';
+import {PieceOnBoard} from '../PieceOnboard';
 import type {Position} from '../Position';
 import PawnBlackMoveCalculator from './PawnBlackMoveCalculator';
 import {WhitesPawnMovesCalculator} from './PawnWhiteMoveCalculator';
@@ -12,7 +13,7 @@ export class Pawn extends PieceOnBoard {
 		this.hasAlreadyMoved = hasAlreadyMoved;
 	}
 
-	move(board: Board, to: {col: string; row: string}) {
+	move(board: Board, to: Position) {
 		super.move(board, to);
 
 		if (!this.hasAlreadyMoved) {

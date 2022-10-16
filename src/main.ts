@@ -26,12 +26,12 @@ const main = async (): Promise<void> => {
 
 	const moves = await getPieceAvailableMoves.execute({
 		gameId,
-		pieceId: game.board.pieces[0].id,
+		pieceId: game.board.piecesOnBoard[0].id,
 	});
 
 	await movePiece.execute({
 		gameId,
-		pieceId: game.board.pieces[0].id,
+		pieceId: game.board.piecesOnBoard[0].id,
 		to: moves[0],
 	});
 

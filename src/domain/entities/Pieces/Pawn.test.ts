@@ -1,5 +1,5 @@
 import {Board} from '../Board';
-import {PieceColor} from '../PieceOnboard';
+import {PieceColor} from '../Piece';
 import {Col, Position, Row} from '../Position';
 import {Pawn} from './Pawn';
 
@@ -22,7 +22,7 @@ describe('Pawn', () => {
 				const board = new Board();
 				const pawn = new Pawn('any-id', new Position(Row.TWO, Col.A), PieceColor.WHITE);
 				board.addPiece(pawn);
-				pawn.move(board, {row: Row.THREE, col: Col.A});
+				pawn.move(board, new Position(Row.THREE, Col.A));
 				const avaliableMoves = pawn.getAvailableMoves(board);
 				expect(avaliableMoves).toHaveLength(1);
 				expect(avaliableMoves).toContainEqual(new Position(Row.FOUR, Col.A));
@@ -84,7 +84,7 @@ describe('Pawn', () => {
 				const board = new Board();
 				const pawn = new Pawn('any-id', new Position(Row.SEVEN, Col.A), PieceColor.BLACK);
 				board.addPiece(pawn);
-				pawn.move(board, {row: Row.SIX, col: Col.A});
+				pawn.move(board, new Position(Row.SIX, Col.A));
 				const avaliableMoves = pawn.getAvailableMoves(board);
 				expect(avaliableMoves).toHaveLength(1);
 				expect(avaliableMoves).toContainEqual(new Position(Row.FIVE, Col.A));

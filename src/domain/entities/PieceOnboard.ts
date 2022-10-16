@@ -1,20 +1,19 @@
 import type {Board} from './Board';
-import {Col, Position, Row} from './Position';
+import type {PieceColor} from './Piece';
+import {Piece, PieceStatus} from './Piece';
+import type {Position} from './Position';
+import {Col, Row} from './Position';
 
-export enum PieceColor {
-	WHITE = 'WHITE',
-	BLACK = 'BLACK',
-}
-
-export abstract class PieceOnBoard {
+export abstract class PieceOnBoard extends Piece {
 	constructor(
-		readonly id: string,
+		id: string,
 		protected position: Position,
-		readonly color: PieceColor,
+		color: PieceColor,
 	) {
+		super(id, PieceStatus.ONBOARD, color);
 	}
 
-	public move(board: Board, to: {row: string; col: string}) {
+	public move(board: Board, to: Position) {
 		const availableMoves = this.getAvailableMoves(board);
 
 		const isMoveAvailable = availableMoves
@@ -24,11 +23,21 @@ export abstract class PieceOnBoard {
 			throw new Error('MOVEMENT_NOT_AVAILABLE');
 		}
 
-		this.position = new Position(to.row, to.col);
+		const pieceOnPosition = board.getPieceByPosition(to);
+
+		if (pieceOnPosition) {
+			board.capturePiece(pieceOnPosition);
+		}
+
+		this.position = to;
 	}
 
 	public getPosition() {
 		return this.position;
+	}
+
+	public getColor() {
+		return this.color;
 	}
 
 	public getRowIndex() {
