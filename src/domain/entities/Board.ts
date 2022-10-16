@@ -1,5 +1,4 @@
 import type {PieceColor} from './Piece';
-import {Piece} from './Piece';
 import {PieceCaptured} from './PieceCaptured';
 import type {PieceOnBoard} from './PieceOnboard';
 import type {Position} from './Position';
