@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 import {Board} from './Board';
-import {PieceColor} from './PieceOnboard';
+import {PieceColor} from './Piece';
 import {Pawn} from './Pieces/Pawn';
 import {Col, Position, Row} from './Position';
 

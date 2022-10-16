@@ -1,3 +1,4 @@
+import {Position} from '../entities/Position';
 import type {GetGameByIdRepository, UpdateBoardGameRepository} from '../repositories';
 
 type Input = {
@@ -21,7 +22,8 @@ export class MovePiece {
 			throw new Error('GAME_NOT_FOUND');
 		}
 
-		game.board.movePiece(input.pieceId, input.to);
+		const piece = game.board.getPieceOnboardById(input.pieceId);
+		game.board.movePiece(piece, new Position(input.to.row, input.to.col));
 
 		await this.gamesRepository.updateBoard(game.board, input.gameId);
 	}

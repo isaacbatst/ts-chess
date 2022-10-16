@@ -1,10 +1,6 @@
 import crypto from 'node:crypto';
-import {Board} from '../entities/Board';
 import {BoardCreator} from '../entities/BoardCreator';
 import {Game} from '../entities/Game';
-import {PieceColor} from '../entities/PieceOnboard';
-import {Pawn} from '../entities/Pieces/Pawn';
-import {Col, Position, Row} from '../entities/Position';
 import type {CreateGameRepository} from '../repositories';
 
 type Input = {

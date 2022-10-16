@@ -23,7 +23,8 @@ export class GetPieceAvailableMoves {
 			throw new Error('GAME_NOT_FOUND');
 		}
 
-		const moves = game.board.getPieceAvailableMoves(input.pieceId);
+		const piece = game.board.getPieceOnboardById(input.pieceId);
+		const moves = game.board.getPieceAvailableMoves(piece);
 
 		return moves;
 	}

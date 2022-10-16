@@ -23,12 +23,6 @@ export abstract class PieceOnBoard extends Piece {
 			throw new Error('MOVEMENT_NOT_AVAILABLE');
 		}
 
-		const pieceOnPosition = board.getPieceByPosition(to);
-
-		if (pieceOnPosition) {
-			board.capturePiece(pieceOnPosition);
-		}
-
 		this.position = to;
 	}
 

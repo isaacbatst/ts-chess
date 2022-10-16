@@ -39,17 +39,33 @@ export class Board {
 		});
 	}
 
-	public movePiece(pieceId: string, to: Position): void {
+	public getPieceOnboardById(pieceId: string): PieceOnBoard {
 		const piece = this.piecesOnBoard.find(piece => piece.id === pieceId);
 
 		if (!piece) {
 			throw new Error('PIECE_NOT_FOUND');
 		}
 
-		piece.move(this, to);
+		return piece;
 	}
 
-	public capturePiece(piece: PieceOnBoard) {
+	public movePiece(piece: PieceOnBoard, to: Position): void {
+		const pieceOnPosition = this.getPieceByPosition(to);
+
+		piece.move(this, to);
+
+		if (pieceOnPosition) {
+			this.capturePiece(pieceOnPosition);
+		}
+	}
+
+	public getPieceAvailableMoves(piece: PieceOnBoard): Position[] {
+		const moves = piece.getAvailableMoves(this);
+
+		return moves;
+	}
+
+	private capturePiece(piece: PieceOnBoard) {
 		const index = this.piecesOnBoard.findIndex(iteratedPiece => iteratedPiece.id === piece.id);
 
 		if (!index) {
@@ -62,19 +78,7 @@ export class Board {
 		this.piecesCaptured.push(captured);
 	}
 
-	public getPieceAvailableMoves(pieceId: string): Position[] {
-		const piece = this.piecesOnBoard.find(piece => piece.id === pieceId);
-
-		if (!piece) {
-			throw new Error('PIECE_NOT_FOUND');
-		}
-
-		const moves = piece.getAvailableMoves(this);
-
-		return moves;
-	}
-
-	public getPieceByPosition(position: Position) {
+	private getPieceByPosition(position: Position) {
 		const piece = this.piecesOnBoard.find(piece => {
 			const piecePosition = piece.getPosition();
 
