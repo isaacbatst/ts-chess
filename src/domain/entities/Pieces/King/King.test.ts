@@ -33,6 +33,15 @@ describe('King', () => {
 				const avaliableMoves = king.getAvailableMoves(board);
 				expect(avaliableMoves).toContainEqual(new Position(Row.FIVE, Col.D));
 			});
+
+			it('should allow move to right', () => {
+				const board = new Board();
+				const king = new King('any-id', new Position(Row.FIVE, Col.E), PieceColor.WHITE);
+				board.addPiece(king);
+
+				const avaliableMoves = king.getAvailableMoves(board);
+				expect(avaliableMoves).toContainEqual(new Position(Row.FIVE, Col.F));
+			});
 		});
 	});
 });

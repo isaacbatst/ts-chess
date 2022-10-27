@@ -37,6 +37,15 @@ export class King extends PieceOnBoard {
 			}
 		}
 
+		if (colIndex < Board.cols.length - 1) {
+			const nextCol = Board.cols[colIndex + 1];
+			const position = new Position(this.position.row, nextCol);
+
+			if (this.isPossibleMove(board, position)) {
+				moves.push(position);
+			}
+		}
+
 		return moves;
 	}
 
