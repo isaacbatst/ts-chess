@@ -48,11 +48,4 @@ export class King extends PieceOnBoard {
 
 		return moves;
 	}
-
-	private isPossibleMove(board: Board, position: Position): boolean {
-		const isPositionOccupied = board.isPositionOccupied(position);
-		const isPositionOccupiedByEnemy = board.isPositionOccupiedByEnemy(position, this.color);
-
-		return (!isPositionOccupied || isPositionOccupiedByEnemy);
-	}
 }

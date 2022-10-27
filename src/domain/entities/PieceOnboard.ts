@@ -57,4 +57,11 @@ export abstract class PieceOnBoard extends Piece {
 	}
 
 	abstract getAvailableMoves(board: Board): Position[];
+
+	protected isPossibleMove(board: Board, position: Position): boolean {
+		const isPositionOccupied = board.isPositionOccupied(position);
+		const isPositionOccupiedByEnemy = board.isPositionOccupiedByEnemy(position, this.color);
+
+		return (!isPositionOccupied || isPositionOccupiedByEnemy);
+	}
 }
