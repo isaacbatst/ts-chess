@@ -17,40 +17,56 @@ export abstract class PawnMovesCalculator {
 
 	public abstract getMoves(): Position[];
 
-	protected checkAndPushLeftDiagonal(moves: Position[]) {
-		const leftDiagonal = this.getLeftDiagonal();
-		if (this.board.isPositionOccupiedByEnemy(leftDiagonal, this.pawn.color)) {
-			moves.push(leftDiagonal);
-		}
-	}
-
-	protected checkAndPushRightDiagonal(moves: Position[]) {
-		const rightDiagonal = this.getRightDiagonal();
-		if (this.board.isPositionOccupiedByEnemy(rightDiagonal, this.pawn.color)) {
-			moves.push(rightDiagonal);
-		}
-	}
-
 	protected getCaptureMoves(): Position[] {
 		const moves: Position[] = [];
 		const position = this.pawn.getPosition();
 
 		if (position.col === Col.A) {
-			this.checkAndPushRightDiagonal(moves);
-			return moves;
+			return this.getPossibleCapturesForColA();
 		}
 
 		if (position.col === Col.H) {
-			this.checkAndPushLeftDiagonal(moves);
-			return moves;
+			return this.getPossibleCapturesForColH();
 		}
 
-		this.checkAndPushRightDiagonal(moves);
-		this.checkAndPushLeftDiagonal(moves);
+		if (this.isRightDiagonalPossible()) {
+			moves.push(this.getRightDiagonal());
+		}
+
+		if (this.isLeftDiagonalPossible()) {
+			moves.push(this.getLeftDiagonal());
+		}
 
 		return moves;
 	}
 
 	protected abstract getLeftDiagonal(): Position;
 	protected abstract getRightDiagonal(): Position;
+
+	private isRightDiagonalPossible() {
+		const rightDiagonal = this.getRightDiagonal();
+
+		return this.board.isPositionOccupiedByEnemy(rightDiagonal, this.pawn.color);
+	}
+
+	private isLeftDiagonalPossible() {
+		const leftDiagonal = this.getLeftDiagonal();
+
+		return this.board.isPositionOccupiedByEnemy(leftDiagonal, this.pawn.color);
+	}
+
+	private getPossibleCapturesForColA(): Position[] {
+		const moves: Position[] = [];
+
+		if (this.isRightDiagonalPossible()) {
+			moves.push(this.getRightDiagonal());
+		}
+
+		return moves;
+	}
+
+	private getPossibleCapturesForColH(): Position[] {
+		const leftDiagonal = this.getLeftDiagonal();
+		return [leftDiagonal];
+	}
 }
